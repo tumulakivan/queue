@@ -1,30 +1,7 @@
-import { useState } from "react";
-import type { ItemProps } from "../types/ItemProps";
+import type { CashierProps } from "../types/CashierProps";
 import Items from "./Items";
 
-const getRandomDuration = (min: number, max: number): number => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const getRandomPriority = (): 0 | 1 => {
-  return Math.random() < 0.2 ? 0 : 1;
-};
-
-const Cashier: React.FC = () => {
-  const [items, setItems] = useState<ItemProps[]>([]);
-  const [countItems, setCountItems] = useState<number | 0>(0);
-
-  const addItem = () => {
-    const newItem: ItemProps = {
-      id: countItems,
-      duration: getRandomDuration(1, 100),
-      priority: getRandomPriority(),
-    };
-
-    setItems([...items, newItem]);
-    setCountItems((prev) => prev + 1);
-  };
-
+const Cashier: React.FC<CashierProps> = ({ items, addItem, assignItem }) => {
   return (
     <div className="w-1/2 h-full bg-gray-300 rounded-2xl p-8 flex flex-row">
       <div className="w-1/2 h-full flex flex-col justify-center items-center gap-4">
@@ -33,13 +10,16 @@ const Cashier: React.FC = () => {
           className="bg-white w-fit px-4 py-2 rounded border cursor-pointer hover:bg-gray-200"
           onClick={addItem}
         >
-          Add Customer
+          Add Item
         </button>
-        <button className="bg-white w-fit px-4 py-2 rounded border cursor-pointer hover:bg-gray-200">
-          Assign Customer
+        <button
+          className="bg-white w-fit px-4 py-2 rounded border cursor-pointer hover:bg-gray-200"
+          onClick={assignItem}
+        >
+          Assign Item
         </button>
       </div>
-      <div className="w-1/2 h-full bg-white rounded-2xl p-4 flex flex-wrap overflow-auto gap-2 content-start items-start">
+      <div className="w-1/2 h-full bg-white rounded-2xl p-4 flex flex-wrap overflow-auto gap-2 content-start items-start scrollbar scrollbar-w-2 scrollbar-track-gray-300 scrollbar-thumb-gray-500 scrollbar-hover:scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
         {items.length === 0 ? (
           <p className="text-white">No items yet.</p>
         ) : (
