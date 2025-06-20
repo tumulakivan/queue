@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cashier from "./components/Cashier";
 import QueueArea from "./components/Queues/QueueArea";
 import type { ItemProps } from "./types/ItemProps";
 
 function App() {
   const [items, setItems] = useState<ItemProps[]>([]);
-  const [assignedItems, setAssignedItems] = useState<ItemProps[]>([]);
   const [countItems, setCountItems] = useState<number | 0>(0);
   const [priorityQueue, setPriorityQueue] = useState<ItemProps[]>([]);
   const [firstRegularQueue, setFirstRegularQueue] = useState<ItemProps[]>([]);
@@ -51,6 +50,39 @@ function App() {
       return otherItems;
     });
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPriorityQueue((prev) =>
+        prev
+          .map((item) => ({
+            ...item,
+            duration: item.duration > 0 ? item.duration - 1 : 0,
+          }))
+          .filter((item) => item.duration > 0)
+      );
+
+      setFirstRegularQueue((prev) =>
+        prev
+          .map((item) => ({
+            ...item,
+            duration: item.duration > 0 ? item.duration - 1 : 0,
+          }))
+          .filter((item) => item.duration > 0)
+      );
+
+      setSecondRegularQueue((prev) =>
+        prev
+          .map((item) => ({
+            ...item,
+            duration: item.duration > 0 ? item.duration - 1 : 0,
+          }))
+          .filter((item) => item.duration > 0)
+      );
+    }, 1000); // every 1 second
+
+    return () => clearInterval(interval); // cleanup on unmount
+  }, []);
 
   return (
     <div className="p-8 bg-gray-800 w-screen h-screen overflow-hidden flex flex-row gap-8">
