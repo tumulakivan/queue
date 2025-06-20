@@ -7,9 +7,6 @@ function App() {
   const [items, setItems] = useState<ItemProps[]>([]);
   const [assignedItems, setAssignedItems] = useState<ItemProps[]>([]);
   const [countItems, setCountItems] = useState<number | 0>(0);
-  const [priorityQueue, setPriorityQueue] = useState<ItemProps[]>([]);
-  const [firstRegularQueue, setFirstRegularQueue] = useState<ItemProps[]>([]);
-  const [secondRegularQueue, setSecondRegularQueue] = useState<ItemProps[]>([]);
 
   const getRandomDuration = (min: number, max: number): number => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -34,18 +31,8 @@ function App() {
     setItems((prevItems) => {
       const [firstItem, ...otherItems] = prevItems;
 
-      if (firstItem && firstItem.priority === 0) {
-        setPriorityQueue((prev) => [...prev, firstItem]);
-      } else if (firstItem && firstItem.priority === 1) {
-        if (firstRegularQueue.length === 0) {
-          setFirstRegularQueue((prev) => [...prev, firstItem]);
-        } else if (secondRegularQueue.length === 0) {
-          setSecondRegularQueue((prev) => [...prev, firstItem]);
-        } else if (firstRegularQueue.length <= secondRegularQueue.length) {
-          setFirstRegularQueue((prev) => [...prev, firstItem]);
-        } else {
-          setSecondRegularQueue((prev) => [...prev, firstItem]);
-        }
+      if (firstItem) {
+        setAssignedItems((prev) => [...prev, firstItem]);
       }
 
       return otherItems;
@@ -55,11 +42,7 @@ function App() {
   return (
     <div className="p-8 bg-gray-800 w-screen h-screen overflow-hidden flex flex-row gap-8">
       <Cashier items={items} addItem={addItem} assignItem={assignItem} />
-      <QueueArea
-        priorityQueue={priorityQueue}
-        firstRegularQueue={firstRegularQueue}
-        secondRegularQueue={secondRegularQueue}
-      />
+      <QueueArea assignedItems={assignedItems} />
     </div>
   );
 }

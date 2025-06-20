@@ -19,7 +19,7 @@ const Cashier: React.FC<CashierProps> = ({ items, addItem, assignItem }) => {
           Assign Item
         </button>
       </div>
-      <div className="w-1/2 h-full bg-white rounded-2xl p-4 flex flex-wrap overflow-auto gap-2 content-start items-start scrollbar scrollbar-w-2 scrollbar-track-gray-300 scrollbar-thumb-gray-500 scrollbar-hover:scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full scrollbar-track-rounded-full transition-all duration-100">
+      <div className="w-1/2 h-full bg-white rounded-2xl p-4 flex flex-wrap overflow-auto gap-2 content-start items-start scrollbar scrollbar-w-2 scrollbar-track-gray-300 scrollbar-thumb-gray-500 scrollbar-hover:scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
         {items.length === 0 ? (
           <p className="text-white">No items yet.</p>
         ) : (
