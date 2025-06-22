@@ -51,6 +51,33 @@ function App() {
     });
   };
 
+  const assignAllItems = () => {
+    const newPriorityQueue = [...priorityQueue];
+    const newFirstRegular = [...firstRegularQueue];
+    const newSecondRegular = [...secondRegularQueue];
+
+    items.forEach((item) => {
+      if (item.priority === 0) {
+        newPriorityQueue.push(item);
+      } else {
+        if (newFirstRegular.length === 0) {
+          newFirstRegular.push(item);
+        } else if (newSecondRegular.length === 0) {
+          newSecondRegular.push(item);
+        } else if (newFirstRegular.length <= newSecondRegular.length) {
+          newFirstRegular.push(item);
+        } else {
+          newSecondRegular.push(item);
+        }
+      }
+    });
+
+    setPriorityQueue(newPriorityQueue);
+    setFirstRegularQueue(newFirstRegular);
+    setSecondRegularQueue(newSecondRegular);
+    setItems([]);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setPriorityQueue((prev) =>
@@ -81,7 +108,7 @@ function App() {
       );
     }, 1000); // every 1 second
 
-    return () => clearInterval(interval); // cleanup on unmount
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -106,7 +133,12 @@ function App() {
 
   return (
     <div className="p-8 bg-gray-800 w-screen h-screen overflow-hidden flex flex-row gap-8">
-      <Cashier items={items} addItem={addItem} assignItem={assignItem} />
+      <Cashier
+        items={items}
+        addItem={addItem}
+        assignItem={assignItem}
+        assignAllItems={assignAllItems}
+      />
       <QueueArea
         priorityQueue={priorityQueue}
         firstRegularQueue={firstRegularQueue}
