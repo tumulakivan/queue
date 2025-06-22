@@ -84,6 +84,26 @@ function App() {
     return () => clearInterval(interval); // cleanup on unmount
   }, []);
 
+  useEffect(() => {
+    const offset = firstRegularQueue.length - secondRegularQueue.length;
+
+    if (Math.abs(offset) >= 2) {
+      if (offset > 0) {
+        setFirstRegularQueue((prev) => {
+          const [transferItem, ...prevQueue] = prev;
+          setSecondRegularQueue((second) => [...second, transferItem]);
+          return prevQueue;
+        });
+      } else {
+        setSecondRegularQueue((prev) => {
+          const [transferItem, ...prevQueue] = prev;
+          setFirstRegularQueue((first) => [...first, transferItem]);
+          return prevQueue;
+        });
+      }
+    }
+  }, [firstRegularQueue, secondRegularQueue]);
+
   return (
     <div className="p-8 bg-gray-800 w-screen h-screen overflow-hidden flex flex-row gap-8">
       <Cashier items={items} addItem={addItem} assignItem={assignItem} />
