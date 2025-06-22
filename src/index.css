@@ -1,7 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+
 @import "tailwindcss";
+
 @plugin "tailwind-scrollbar" {
   nocompatible: true;
 }
 
 @theme {
+  --inset-shadow-cashier: inset 0 0 10px rgba(30, 31, 30, 0.25);
+
+  --font-big: "Hammersmith One", sans-serif;
+  --font-small: "Sansation", sans-serif;
+
+  --color-lighttext: #f2f2f2;
+  --color-base: #1a1a1b;
+  --color-componentbody: #1e1f1e;
+  --color-gradend: #252524;
+  --color-gradstop: #2e2e2f;
+  --color-gradstart: #3b3a3b;
 }

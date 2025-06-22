@@ -132,7 +132,7 @@ function App() {
   }, [firstRegularQueue, secondRegularQueue]);
 
   return (
-    <div className="p-8 bg-gray-800 w-screen h-screen overflow-hidden flex flex-row gap-8">
+    <div className="p-8 font-small bg-base w-screen h-screen overflow-hidden flex flex-row gap-8">
       <Cashier
         items={items}
         addItem={addItem}
