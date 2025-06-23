@@ -18,11 +18,28 @@ function App() {
     return Math.random() < 0.2 ? 0 : 1;
   };
 
+  const removeItemById = (id: number, type: 0 | 1 | 2) => {
+    switch (type) {
+      case 0:
+        setPriorityQueue((queue) => queue.filter((item) => item.id !== id));
+        break;
+      case 1:
+        setFirstRegularQueue((queue) => queue.filter((item) => item.id !== id));
+        break;
+      case 2:
+        setSecondRegularQueue((queue) =>
+          queue.filter((item) => item.id !== id)
+        );
+        break;
+    }
+  };
+
   const addItem = () => {
     const newItem: ItemProps = {
       id: countItems,
       duration: getRandomDuration(1, 100),
       priority: getRandomPriority(),
+      onClick: () => {},
     };
 
     setItems([...items, newItem]);
@@ -143,6 +160,7 @@ function App() {
         priorityQueue={priorityQueue}
         firstRegularQueue={firstRegularQueue}
         secondRegularQueue={secondRegularQueue}
+        removeItemById={removeItemById}
       />
     </div>
   );

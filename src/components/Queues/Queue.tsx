@@ -1,7 +1,7 @@
 import type { QueueProps } from "../../types/QueueProps";
 import Items from "../Items";
 
-const Queue: React.FC<QueueProps> = ({ type, items }) => {
+const Queue: React.FC<QueueProps> = ({ type, items, removeItemById }) => {
   return (
     <div className="min-h-1/3 w-full gap-2 flex flex-col text-lighttext">
       <h1>
@@ -14,7 +14,13 @@ const Queue: React.FC<QueueProps> = ({ type, items }) => {
         {items.length === 0 ? (
           <p className="text-gray-400">Empty queue...</p>
         ) : (
-          items.map((item) => <Items key={item.id} {...item} />)
+          items.map((item) => (
+            <Items
+              key={item.id}
+              {...item}
+              onClick={() => removeItemById(item.id)}
+            />
+          ))
         )}
       </div>
     </div>
