@@ -10,8 +10,8 @@ const Items: React.FC<ItemProps> = ({ id, duration, priority }) => {
 
   return (
     <div
-      className={`text-base text-center px-4 py-2 h-fit w-28 rounded border ${
-        priority === 0 ? "bg-red-300" : "bg-amber-300"
+      className={`text-base text-center px-4 py-2 h-fit w-30 rounded border bg-gradient-to-t ${
+        priority === 0 ? "from-priogradstart via-priogradstop to-priogradend" : "from-btngradstart via-btngradstop to-btngradend"
       } transition-opacity duration-200 ${
         mounted ? "opacity-100" : "opacity-0"
       }`}

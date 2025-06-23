@@ -18,4 +18,14 @@
   --color-gradend: #252524;
   --color-gradstop: #2e2e2f;
   --color-gradstart: #3b3a3b;
+  --color-btngradstart: #ffd230;
+  --color-btngradstop: #f7d45b;
+  --color-btngradend: #f9dd82; 
+  --color-priogradstart: #e85f33;
+  --color-priogradstop: #ea724a;
+  --color-priogradend: #fb8861;
+
+  --shadow-btnshadow: 0 0 20px rgba(200, 200, 200, 1);
+
+  --spacing-30: 7.5rem;
 }
