@@ -4,11 +4,8 @@ import Items from "../Items";
 const Queue: React.FC<QueueProps> = ({ type, items, removeItemById }) => {
   return (
     <div className="min-h-1/3 w-full gap-2 flex flex-col text-lighttext">
-      <h1>
+      <h1 className="text-2xl">
         {type === 0 ? "Priority" : "Regular"}
-        <span className="text-red-400 italic text-xs ml-2">
-          Number of items in queue: {items.length}
-        </span>
       </h1>
       <div className="bg-base rounded p-4 flex flex-wrap overflow-hidden gap-2 content-start items-start">
         {items.length === 0 ? (
