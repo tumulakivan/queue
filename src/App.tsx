@@ -108,7 +108,6 @@ function App() {
 
         const updatedQueue = [updatedFirst, ...rest];
 
-        // Filter out if duration reaches 0
         return updatedQueue.filter((item) => item.duration > 0);
       });
 
@@ -147,22 +146,41 @@ function App() {
   useEffect(() => {
     const offset = firstRegularQueue.length - secondRegularQueue.length;
 
-    if (Math.abs(offset) >= 2) {
+    if (
+      priorityQueue.length === 0 &&
+      (firstRegularQueue.length > 0 || secondRegularQueue.length > 0)
+    ) {
+      const totalItems = firstRegularQueue.length + secondRegularQueue.length;
+      const average = Math.floor(totalItems / 3);
+
+      // Step 1: Merge regular queues
+      const combined = [...firstRegularQueue, ...secondRegularQueue];
+
+      // Step 2: Distribute evenly across the 3 queues
+      const newFirst = combined.slice(0, average);
+      const newSecond = combined.slice(average, average * 2);
+      const newPriority = combined.slice(average * 2);
+
+      setFirstRegularQueue(newFirst);
+      setSecondRegularQueue(newSecond);
+      setPriorityQueue(newPriority);
+    } else if (Math.abs(offset) >= 2) {
+      // Regular 2-way balancing
       if (offset > 0) {
         setFirstRegularQueue((prev) => {
-          const [transferItem, ...prevQueue] = prev;
+          const [transferItem, ...rest] = prev;
           setSecondRegularQueue((second) => [...second, transferItem]);
-          return prevQueue;
+          return rest;
         });
       } else {
         setSecondRegularQueue((prev) => {
-          const [transferItem, ...prevQueue] = prev;
+          const [transferItem, ...rest] = prev;
           setFirstRegularQueue((first) => [...first, transferItem]);
-          return prevQueue;
+          return rest;
         });
       }
     }
-  }, [firstRegularQueue, secondRegularQueue]);
+  }, [priorityQueue, firstRegularQueue, secondRegularQueue]);
 
   return (
     <div className="p-8 font-small bg-base w-screen h-screen overflow-hidden flex flex-row gap-8">
