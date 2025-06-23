@@ -97,33 +97,49 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPriorityQueue((prev) =>
-        prev
-          .map((item) => ({
-            ...item,
-            duration: item.duration > 0 ? item.duration - 1 : 0,
-          }))
-          .filter((item) => item.duration > 0)
-      );
+      setPriorityQueue((prev) => {
+        if (prev.length === 0) return prev;
 
-      setFirstRegularQueue((prev) =>
-        prev
-          .map((item) => ({
-            ...item,
-            duration: item.duration > 0 ? item.duration - 1 : 0,
-          }))
-          .filter((item) => item.duration > 0)
-      );
+        const [first, ...rest] = prev;
+        const updatedFirst = {
+          ...first,
+          duration: first.duration > 0 ? first.duration - 1 : 0,
+        };
 
-      setSecondRegularQueue((prev) =>
-        prev
-          .map((item) => ({
-            ...item,
-            duration: item.duration > 0 ? item.duration - 1 : 0,
-          }))
-          .filter((item) => item.duration > 0)
-      );
-    }, 1000); // every 1 second
+        const updatedQueue = [updatedFirst, ...rest];
+
+        // Filter out if duration reaches 0
+        return updatedQueue.filter((item) => item.duration > 0);
+      });
+
+      setFirstRegularQueue((prev) => {
+        if (prev.length === 0) return prev;
+
+        const [first, ...rest] = prev;
+        const updatedFirst = {
+          ...first,
+          duration: first.duration > 0 ? first.duration - 1 : 0,
+        };
+
+        const updatedQueue = [updatedFirst, ...rest];
+
+        return updatedQueue.filter((item) => item.duration > 0);
+      });
+
+      setSecondRegularQueue((prev) => {
+        if (prev.length === 0) return prev;
+
+        const [first, ...rest] = prev;
+        const updatedFirst = {
+          ...first,
+          duration: first.duration > 0 ? first.duration - 1 : 0,
+        };
+
+        const updatedQueue = [updatedFirst, ...rest];
+
+        return updatedQueue.filter((item) => item.duration > 0);
+      });
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);
